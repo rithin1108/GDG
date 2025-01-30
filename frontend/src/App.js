@@ -1,15 +1,18 @@
+import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-router-dom';
 
 import './App.css';
-import OCRUpload from './components/OCRUpload';  // Importing OCRUpload from components
+import OCRUpload from './components/OCRUpload';  
+import StudentPage from './components/student/stupage';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <OCRUpload />  {/* Use the OCRUpload component */}
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/stupage" element={<StudentPage/>}></Route>
+        <Route path="/OCR" element={<OCRUpload/>}></Route>
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
