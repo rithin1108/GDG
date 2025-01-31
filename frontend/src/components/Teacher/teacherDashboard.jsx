@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react"; // Keep this import at the top
+import axios from "axios";
 import {
   AppBar,
   Toolbar,
@@ -17,6 +18,7 @@ import {
   useTheme,
   createTheme,
   ThemeProvider,
+  TextField,
 } from "@mui/material";
 import {
   Assessment,
@@ -27,7 +29,7 @@ import {
   Search,
   MoreVert,
   TrendingUp,
-  School
+  School,
 } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import { styled } from "@mui/system";
@@ -39,13 +41,13 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: '#4A4AFF',
+      main: "#4A4AFF",
     },
     secondary: {
-      main: '#FF66B2',
+      main: "#FF66B2",
     },
     background: {
-      default: '#f5f7fb',
+      default: "#f5f7fb",
     },
   },
 });
@@ -65,7 +67,7 @@ const StyledPaper = styled(Paper)({
   transition: "transform 0.3s ease",
   "&:hover": {
     transform: "translateY(-5px)",
-  }
+  },
 });
 
 const StyledCard = styled(Card)({
@@ -77,7 +79,7 @@ const StyledCard = styled(Card)({
   cursor: "pointer",
   "&:hover": {
     transform: "translateY(-5px)",
-  }
+  },
 });
 
 const StyledButton = styled(Button)({
@@ -90,55 +92,58 @@ const StyledButton = styled(Button)({
   "&:hover": {
     backgroundColor: "#5321f7",
     transform: "scale(1.05)",
-  }
+  },
 });
 
 const columns = [
-  { 
-    field: "id", 
-    headerName: "ID", 
-    width: 90 
-  },
-  { 
-    field: "name", 
-    headerName: "Student Name", 
+  { field: "id", headerName: "ID", width: 90 },
+  {
+    field: "name",
+    headerName: "Student Name",
     width: 200,
     renderCell: (params) => (
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Avatar sx={{ bgcolor: '#4A4AFF' }}>{params.value.charAt(0)}</Avatar>
+        <Avatar sx={{ bgcolor: "#4A4AFF" }}>{params.value.charAt(0)}</Avatar>
         <Typography>{params.value}</Typography>
       </Box>
-    )
+    ),
   },
-  { 
-    field: "score", 
-    headerName: "Score", 
+  {
+    field: "score",
+    headerName: "Score",
     width: 150,
     renderCell: (params) => (
       <Box sx={{ minWidth: 100 }}>
-        <Typography variant="body2" sx={{ mb: 1 }}>{params.value}%</Typography>
-        <LinearProgress 
-          variant="determinate" 
-          value={params.value} 
+        <Typography variant="body2" sx={{ mb: 1 }}>
+          {params.value}%
+        </Typography>
+        <LinearProgress
+          variant="determinate"
+          value={params.value}
           sx={{
             height: 8,
             borderRadius: 5,
             backgroundColor: "#e5ecfc",
             "& .MuiLinearProgress-bar": {
-              backgroundColor: params.value >= 90 ? "#4A4AFF" : params.value >= 70 ? "#FF66B2" : "#581ade",
-              borderRadius: 5
-            }
+              backgroundColor:
+                params.value >= 90
+                  ? "#4A4AFF"
+                  : params.value >= 70
+                  ? "#FF66B2"
+                  : "#581ade",
+              borderRadius: 5,
+            },
           }}
         />
       </Box>
-    )
+    ),
   },
-  { 
-    field: "feedback", 
-    headerName: "Feedback", 
+  {
+    field: "feedback",
+    headerName: "Feedback",
     width: 300,
     renderCell: (params) => (
-      <Chip 
+      <Chip
         label={params.value}
         sx={{
           backgroundColor: "#e5ecfc",
@@ -146,8 +151,8 @@ const columns = [
           fontWeight: 500,
         }}
       />
-    )
-  }
+    ),
+  },
 ];
 
 const rows = [
@@ -155,20 +160,72 @@ const rows = [
   { id: 2, name: "Jane Smith", score: 78, feedback: "Good effort, but room for improvement." },
   { id: 3, name: "Alice Johnson", score: 92, feedback: "Excellent performance." },
   { id: 4, name: "Bob Wilson", score: 88, feedback: "Very good understanding shown." },
-  { id: 5, name: "Emma Davis", score: 95, feedback: "Outstanding work!" }
+  { id: 5, name: "Emma Davis", score: 95, feedback: "Outstanding work!" },
 ];
+
+const FileUploadComponent = () => {
+    const [file, setFile] = useState(null); // Store selected file
+  
+    const handleFileChange = (event) => {
+        setFile(event.target.files[0]);
+        console.log(event.target.files[0]); // Log selected file
+      };
+  
+      const handleUpload = async () => {
+        if (!file) {
+          alert("Please select a file to upload.");
+          return;
+        }
+      
+        const formData = new FormData();
+        formData.append("file", file);
+        console.log("FormData being sent:", formData); // Log FormData
+      
+        try {
+          const response = await axios.post("http://localhost:5000/upload", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+      
+          alert(response.data); // Show response from the server
+        } catch (error) {
+          console.error("Error uploading file:", error); // Log error
+          alert(`Error uploading file: ${error.message}`);
+        }
+      };
+      
+  
+    return (
+      <Box sx={{ p: 3 }}>
+        <Typography variant="h6" gutterBottom>
+          Upload Assignment
+        </Typography>
+        <input type="file" onChange={handleFileChange} />
+        <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={handleUpload}>
+          Upload
+        </Button>
+      </Box>
+    );
+  };
+
+
 
 const TeacherDashboard = () => {
   return (
     <ThemeProvider theme={theme}>
       <DashboardWrapper>
         {/* Header */}
-        <AppBar position="static" elevation={0} sx={{ 
-          backgroundColor: "#e5ecfc",
-          borderRadius: "8px",
-          mb: 3,
-          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
-        }}>
+        <AppBar
+          position="static"
+          elevation={0}
+          sx={{
+            backgroundColor: "#e5ecfc",
+            borderRadius: "8px",
+            mb: 3,
+            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+          }}
+        >
           <Toolbar>
             <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
               <School sx={{ color: "#4A4AFF", mr: 1 }} />
@@ -177,8 +234,12 @@ const TeacherDashboard = () => {
               </Typography>
             </Box>
             <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-              <IconButton><Search /></IconButton>
-              <IconButton><Notifications /></IconButton>
+              <IconButton>
+                <Search />
+              </IconButton>
+              <IconButton>
+                <Notifications />
+              </IconButton>
               <StyledButton>Logout</StyledButton>
             </Box>
           </Toolbar>
@@ -193,27 +254,29 @@ const TeacherDashboard = () => {
                 icon: <Assessment sx={{ fontSize: 40 }} />,
                 title: "Upload Assignments",
                 description: "Save time with AI-driven assignment evaluation",
-                metric: "+24% this week"
+                metric: "+24% this week",
               },
               {
                 icon: <Feedback sx={{ fontSize: 40 }} />,
                 title: "Personalized Feedback",
                 description: "Instant, tailored guidance for each student",
-                metric: "+18% feedback rate"
+                metric: "+18% feedback rate",
               },
               {
                 icon: <AutoGraph sx={{ fontSize: 40 }} />,
                 title: "Performance Analytics",
                 description: "Track student progress and improvement trends",
-                metric: "+32% improvement"
-              }
+                metric: "+32% improvement",
+              },
             ].map((card, index) => (
               <Grid item xs={12} sm={4} key={index}>
                 <StyledCard>
                   <CardContent sx={{ p: 3 }}>
                     <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                       {card.icon}
-                      <IconButton size="small" sx={{ color: "white" }}><MoreVert /></IconButton>
+                      <IconButton size="small" sx={{ color: "white" }}>
+                        <MoreVert />
+                      </IconButton>
                     </Box>
                     <Typography variant="h5" sx={{ mt: 2, mb: 1, fontWeight: 600 }}>
                       {card.title}
@@ -231,6 +294,9 @@ const TeacherDashboard = () => {
             ))}
           </Grid>
 
+          {/* File Upload Component */}
+          <FileUploadComponent />
+
           {/* DataGrid Section */}
           <Box sx={{ height: 400, width: "100%" }}>
             <Typography variant="h5" sx={{ mb: 3, fontWeight: "bold", color: "#333" }}>
@@ -247,16 +313,12 @@ const TeacherDashboard = () => {
                 sx={{
                   border: "none",
                   fontFamily: "'Poppins', sans-serif",
-                  "& .MuiDataGrid-cell": {
-                    borderBottom: "1px solid #f0f0f0"
-                  },
+                  "& .MuiDataGrid-cell": { borderBottom: "1px solid #f0f0f0" },
                   "& .MuiDataGrid-columnHeaders": {
                     backgroundColor: "#f5f7fb",
-                    borderBottom: "2px solid #e0e0e0"
+                    borderBottom: "2px solid #e0e0e0",
                   },
-                  "& .MuiDataGrid-row:hover": {
-                    backgroundColor: "#e5ecfc"
-                  }
+                  "& .MuiDataGrid-row:hover": { backgroundColor: "#e5ecfc" },
                 }}
               />
             </StyledPaper>
@@ -266,5 +328,7 @@ const TeacherDashboard = () => {
     </ThemeProvider>
   );
 };
+
+
 
 export default TeacherDashboard;
