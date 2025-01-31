@@ -173,26 +173,26 @@ const FileUploadComponent = () => {
   
       const handleUpload = async () => {
         if (!file) {
-          alert("Please select a file to upload.");
-          return;
-        }
-      
-        const formData = new FormData();
-        formData.append("file", file);
-        console.log("FormData being sent:", formData); // Log FormData
-      
-        try {
-          const response = await axios.post("http://localhost:5000/upload", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
-      
-          alert(response.data); // Show response from the server
-        } catch (error) {
-          console.error("Error uploading file:", error); // Log error
-          alert(`Error uploading file: ${error.message}`);
-        }
+            alert("Please select a file to upload.");
+            return;
+          }
+          
+          const formData = new FormData();
+          formData.append("file", file);
+          console.log("Uploading File:", file);
+          
+          try {
+            const response = await axios.post("http://localhost:5001/upload", formData, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            });
+            alert(response.data.message);
+          } catch (error) {
+            console.error("Error uploading file:", error);
+            alert(`Error uploading file: ${error.message}`);
+          }
+          
       };
       
   

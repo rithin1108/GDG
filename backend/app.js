@@ -32,6 +32,7 @@ async function connectDB() {
     process.exit(1);
   }
 }
+
 connectDB();
 
 // Multer storage setup (stores file in memory)
@@ -51,25 +52,24 @@ const upload = multer({
 app.post('/upload', upload.single('file'), async (req, res) => {
   try {
     if (!req.file) {
-      console.warn("⚠️ No file uploaded.");
       return res.status(400).json({ success: false, message: 'No file uploaded.' });
     }
 
-    console.log("📂 File uploaded:", req.file.originalname);
-
-    // File metadata and content
     const fileData = {
       fileName: req.file.originalname,
       contentType: req.file.mimetype,
       size: req.file.size,
       uploadedAt: new Date(),
-      fileBuffer: req.file.buffer, // Store binary data
+      fileBuffer: req.file.buffer, // Binary file data
     };
 
-    // Insert into MongoDB
     await collection.insertOne(fileData);
 
-    res.status(200).json({ success: true, message: 'File uploaded successfully.', fileName: req.file.originalname });
+    res.status(200).json({
+      success: true,
+      message: 'File uploaded successfully.',
+      fileName: req.file.originalname,
+    });
   } catch (error) {
     console.error('❌ Error uploading file:', error);
     res.status(500).json({ success: false, message: `Error uploading file: ${error.message}` });
