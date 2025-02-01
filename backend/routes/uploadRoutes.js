@@ -4,7 +4,7 @@ const { MongoClient } = require('mongodb');
 require('dotenv').config();
 
 const app = express();
-const port = 5000;
+const port = 5001;
 
 // Database connection
 const mongoURI = process.env.MONGO_CONNECTION_STRING;

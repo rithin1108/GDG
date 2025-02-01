@@ -3,6 +3,10 @@ import multer from 'multer';
 import { MongoClient } from 'mongodb';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import Tesseract from 'tesseract.js';
+import mammoth from 'mammoth';
+import pdfParse from 'pdf-parse';
+import fs from 'fs';
 
 dotenv.config({ path: './util/.env' }); // Load environment variables
 
@@ -49,41 +53,57 @@ const upload = multer({
 });
 
 // Upload file endpoint
+async function extractText(fileBuffer, contentType) {
+  try {
+    if (contentType === 'application/pdf') {
+      console.log("Processing PDF file...");
+      return (await pdfParse(fileBuffer)).text;
+    } else if (contentType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+      console.log("Processing Word document...");
+      return (await mammoth.extractRawText({ buffer: fileBuffer })).value;
+    } else if (contentType.startsWith('image/')) {
+      console.log("Processing image...");
+      const { data: { text } } = await Tesseract.recognize(fileBuffer, 'eng');
+      return text;
+    }
+    return 'Unsupported file format';
+  } catch (error) {
+    console.error('❌ Error extracting text:', error);
+    return 'Error extracting text';
+  }
+}
+
+// Upload and process the file
 app.post('/upload', upload.single('file'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ success: false, message: 'No file uploaded.' });
     }
 
+    // Log file info for debugging
+    console.log('Uploaded file details:', req.file);
+
+    const extractedText = await extractText(req.file.buffer, req.file.mimetype);
+
     const fileData = {
       fileName: req.file.originalname,
       contentType: req.file.mimetype,
       size: req.file.size,
       uploadedAt: new Date(),
-      fileBuffer: req.file.buffer, // Binary file data
+      extractedText,
     };
 
     await collection.insertOne(fileData);
 
     res.status(200).json({
       success: true,
-      message: 'File uploaded successfully.',
+      message: 'File uploaded and text extracted successfully.',
       fileName: req.file.originalname,
+      extractedText,
     });
   } catch (error) {
     console.error('❌ Error uploading file:', error);
     res.status(500).json({ success: false, message: `Error uploading file: ${error.message}` });
-  }
-});
-
-// Fetch uploaded files (optional)
-app.get('/files', async (req, res) => {
-  try {
-    const files = await collection.find({}, { projection: { fileBuffer: 0 } }).toArray(); // Exclude file content
-    res.status(200).json({ success: true, files });
-  } catch (error) {
-    console.error('❌ Error fetching files:', error);
-    res.status(500).json({ success: false, message: 'Error fetching files' });
   }
 });
 
