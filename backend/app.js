@@ -5,7 +5,6 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import Tesseract from 'tesseract.js';
 import mammoth from 'mammoth';
-import pdfParse from 'pdf-parse';
 import fs from 'fs';
 
 dotenv.config({ path: './util/.env' }); // Load environment variables
@@ -56,8 +55,8 @@ const upload = multer({
 async function extractText(fileBuffer, contentType) {
   try {
     if (contentType === 'application/pdf') {
-      console.log("Processing PDF file...");
-      return (await pdfParse(fileBuffer)).text;
+      
+      return console.log("Processing PDF file...");;
     } else if (contentType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
       console.log("Processing Word document...");
       return (await mammoth.extractRawText({ buffer: fileBuffer })).value;
