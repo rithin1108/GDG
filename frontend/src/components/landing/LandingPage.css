@@ -1,0 +1,310 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f5f7fb;
+  color: #333;
+}
+
+.container {
+  text-align: center;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background: #e5ecfc;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4A4AFF;
+}
+
+.logo span {
+  color: #FF66B2;
+}
+
+nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.cta-button {
+  background: #581ade;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.cta-button:hover {
+  background: #5321f7;
+  transform: scale(1.05);
+}
+
+/* Hero Section */
+.hero {
+  background: #EAF2FF;
+  padding: 80px 20px;
+}
+
+.hero h1 {
+  font-size: 40px;
+  color: #333;
+}
+
+.hero p {
+  font-size: 18px;
+  margin-top: 10px;
+  color: #555;
+}
+
+/* Features Section */
+.features {
+  padding: 60px 140px;
+  margin: 0 0%;
+  background-color: rgb(225, 240, 254);
+}
+
+.features h2 {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.feature-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.feature-card {
+  background: rgb(84, 125, 214);
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+/* How It Works Section */
+.how-it-works {
+  background: #eef5fb;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.workflow {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  position: relative;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Cloud Style for Each Step */
+.cloud-box {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 50%; /* This makes it circular */
+  width: 250px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  position: relative;
+}
+
+.cloud-box:hover {
+  transform: scale(1.1); /* Slight zoom effect */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cloud-box h3 {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+.cloud-box p {
+  font-size: 14px;
+  color: #666;
+  max-width: 80%;
+}
+
+.icon {
+  color: #4A4AFF;
+  font-size: 50px;
+  animation: float 3s infinite ease-in-out; /* Floating animation */
+}
+
+/* Floating Animation */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* FAQ Section */
+.faq {
+  padding: 60px 20px;
+}
+
+.faq h2 {
+  font-size: 30px;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.faq-item {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.faq-item:hover {
+  transform: translateY(-5px);
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  background: #333;
+  color: white;
+  padding: 30px 10%;
+  padding-left: 70px;
+  padding-right: 70px;
+  text-align: left;
+}
+
+.footer-left, .footer-center, .footer-feedback {
+  flex: 1;
+  min-width: 280px; /* Ensures responsiveness */
+  margin-bottom: 20px;
+}
+
+.footer-left h3, .footer-center h3, .footer-feedback h3 {
+  color: #4A4AFF;
+  margin-bottom: 15px;
+}
+
+.footer-left span {
+  color: #FF66B2;
+}
+
+.footer-left p {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.contact-footer {
+  margin-top: 20px;
+}
+
+.contact-footer p {
+  font-size: 14px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-icons a {
+  color: white;
+  font-size: 24px;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icons a:hover {
+  transform: scale(1.1);
+  color: #4A4AFF;
+}
+
+/* Feedback Section */
+.footer-feedback p {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.footer-feedback textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  resize: none;
+  min-height: 80px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-feedback button {
+  margin-top: 10px;
+  background: #581ade;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.footer-feedback button:hover {
+  background: #5321f7;
+  transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-left, .footer-center, .footer-feedback {
+    text-align: center;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+}
