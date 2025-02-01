@@ -77,3 +77,51 @@
     padding: 24px;
     background-color: #ffffff;
 }
+/* ... (previous styles remain the same) */
+
+.app-bar {
+    background-color: #e5ecfc !important;
+    border-radius: 8px !important;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  .logo-icon {
+    color: #4A4AFF;
+    transition: transform 0.3s ease;
+  }
+  
+  .app-bar:hover .logo-icon {
+    transform: rotate(10deg);
+  }
+  
+  .logo-text {
+    color: #4A4AFF !important;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
+  
+  .logo-highlight {
+    color: #FF66B2;
+    position: relative;
+  }
+  
+  .logout-button {
+    background-color: #581ade !important;
+    color: white !important;
+    padding: 8px 24px !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    text-transform: none !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 4px rgba(88, 26, 222, 0.2) !important;
+  }
+  
+  .logout-button:hover {
+    background-color: #5321f7 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(88, 26, 222, 0.3) !important;
+  }
+  
+  /* ... (rest of the styles remain the same) */
