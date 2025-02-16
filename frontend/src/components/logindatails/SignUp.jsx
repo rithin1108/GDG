@@ -1,23 +1,20 @@
 import React, { useState } from "react";
-import { FaUser, FaEnvelope, FaLock, FaPhone, FaArrowLeft } from "react-icons/fa";
-import axios from "axios"; // Import axios for API requests
+import { FaUser, FaEnvelope, FaLock, FaComments, FaArrowLeft } from "react-icons/fa";
+import axios from "axios"; 
 import "./SignUp.css";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
+    username: "",
     email: "",
-    fullName: "",
-    mobile: "",
     password: "",
     confirmPassword: "",
   });
 
-  // Handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -27,10 +24,9 @@ const SignUp = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/signup", {
+      const response = await axios.post("http://localhost:5000/api/auth/chat/signup", {
+        username: formData.username,
         email: formData.email,
-        fullName: formData.fullName,
-        mobile: formData.mobile,
         password: formData.password,
       });
 
@@ -47,31 +43,53 @@ const SignUp = () => {
           <FaArrowLeft />
         </button>
 
-        <h2 className="signup-title">Create an Account</h2>
+        <h2 className="signup-title">Create Account</h2>
 
         <form onSubmit={handleSubmit}>
-          <div className="input-row">
-            <div className="input-group-container">
-              <label className="input-label">Email</label>
-              <div className="input-group">
-                <FaEnvelope className="input-icon" />
-                <input type="email" name="email" placeholder="Enter your email" className="signup-input" value={formData.email} onChange={handleChange} required />
-              </div>
+          <div className="input-group-container">
+            <label className="input-label">Institution Name</label>
+            <div className="input-group">
+              <FaUser className="input-icon" />
+              <input
+                type="text"
+                name="username"
+                placeholder="Enter your institution name"
+                className="signup-input"
+                value={formData.username}
+                onChange={handleChange}
+                required
+              />
             </div>
-            <div className="input-group-container">
-              <label className="input-label">Full Name</label>
-              <div className="input-group">
-                <FaUser className="input-icon" />
-                <input type="text" name="fullName" placeholder="Enter your name" className="signup-input" value={formData.fullName} onChange={handleChange} required />
-              </div>
+          </div>
+          <div className="input-group-container">
+            <label className="input-label">Username</label>
+            <div className="input-group">
+              <FaUser className="input-icon" />
+              <input
+                type="text"
+                name="username"
+                placeholder="Enter your username"
+                className="signup-input"
+                value={formData.username}
+                onChange={handleChange}
+                required
+              />
             </div>
           </div>
 
           <div className="input-group-container">
-            <label className="input-label">Mobile Number</label>
+            <label className="input-label">Email</label>
             <div className="input-group">
-              <FaPhone className="input-icon" />
-              <input type="tel" name="mobile" placeholder="Enter your mobile number" className="signup-input" value={formData.mobile} onChange={handleChange} required />
+              <FaEnvelope className="input-icon" />
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                className="signup-input"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
             </div>
           </div>
 
@@ -80,14 +98,30 @@ const SignUp = () => {
               <label className="input-label">Password</label>
               <div className="input-group">
                 <FaLock className="input-icon" />
-                <input type="password" name="password" placeholder="Enter your password" className="signup-input" value={formData.password} onChange={handleChange} required />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  className="signup-input"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
               </div>
             </div>
             <div className="input-group-container">
               <label className="input-label">Confirm Password</label>
               <div className="input-group">
                 <FaLock className="input-icon" />
-                <input type="password" name="confirmPassword" placeholder="Confirm your password" className="signup-input" value={formData.confirmPassword} onChange={handleChange} required />
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm your password"
+                  className="signup-input"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  required
+                />
               </div>
             </div>
           </div>

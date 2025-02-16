@@ -1,197 +1,270 @@
 body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f5f7fb;
-    color: #333;
-  }
-  
-  .container {
-    text-align: center;
-  }
-  
-  /* Header */
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 50px;
-    background: #e5ecfc;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #4A4AFF;
-  }
-  
-  .logo span {
-    color: #FF66B2;
-  }
-  
-  nav a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-  }
-  
-  .cta-button {
-    background: #581ade;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: backgroound 0.3s ease, transform 0.2s ease;
-  }
-  
-  .cta-button:hover {
-    background: #5321f7;
-    transform: scale(1.05);
-  }
-  
-  .assignment-section {
-    padding: 60px 20px;
-    text-align: center;
-  }
-  
-  .assignment-card {
-    background: white;
-    padding: 30px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center;
-  }
-  
-  .assignment-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .icon {
-    font-size: 50px;
-    color: #4A4AFF;
-    margin-bottom: 10px;
-  }
-  
-  .title {
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 40px;
-  }
-  
-  /* Footer */
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f5f7fb;
+  color: #333;
+}
+
+.container {
+  text-align: center;
+  position: relative;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background: #e5ecfc;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4A4AFF;
+}
+
+.logo span {
+  color: #FF66B2;
+}
+
+nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.cta-button {
+  background: #581ade;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.cta-button:hover {
+  background: #5321f7;
+  transform: scale(1.05);
+}
+
+.assignment-section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.assignment-card {
+  background: white;
+  padding: 30px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(44, 43, 43, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.assignment-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.icon {
+  font-size: 50px;
+  color: #4A4AFF;
+  margin-bottom: 10px;
+}
+
+.submit-card, .submitted-card {
+  animation: fadeIn 1s ease-out;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+/* Header CSS */
+header {
+  background-color: #ffffff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  cursor: pointer;
+}
+
+
 .footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    background: #333;
-    color: white;
-    padding: 30px 10%;
-    padding-left: 70px;
-    padding-right: 70px;
-    text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  background: #333;
+  color: white;
+  padding: 30px 10%;
+  padding-left: 70px;
+  padding-right: 70px;
+  text-align: left;
+}
+
+.footer-left, .footer-center, .footer-feedback {
+  flex: 1;
+  min-width: 280px;
+  margin-bottom: 20px;
+}
+
+.footer-left h3, .footer-center h3, .footer-feedback h3 {
+  color: #4A4AFF;
+  margin-bottom: 15px;
+}
+
+.footer-left span {
+  color: #FF66B2;
+}
+
+.footer-left p {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.contact-footer {
+  margin-top: 20px;
+}
+
+.contact-footer p {
+  font-size: 14px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-icons a {
+  color: white;
+  font-size: 24px;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icons a:hover {
+  transform: scale(1.1);
+  color: #4A4AFF;
+}
+
+.footer-feedback p {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.footer-feedback textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  resize: none;
+  min-height: 80px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-feedback button {
+  margin-top: 10px;
+  background: #581ade;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.footer-feedback button:hover {
+  background: #5321f7;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
-  
+
   .footer-left, .footer-center, .footer-feedback {
-    flex: 1;
-    min-width: 280px; /* Ensures responsiveness */
-    margin-bottom: 20px;
+    text-align: center;
   }
-  
-  .footer-left h3, .footer-center h3, .footer-feedback h3 {
-    color: #4A4AFF;
-    margin-bottom: 15px;
-  }
-  
-  .footer-left span {
-    color: #FF66B2;
-  }
-  
-  .footer-left p {
-    font-size: 14px;
-    margin-bottom: 10px;
-  }
-  
-  .contact-footer {
-    margin-top: 20px;
-  }
-  
-  .contact-footer p {
-    font-size: 14px;
-  }
-  
+
   .social-icons {
-    display: flex;
-    gap: 15px;
-    margin-top: 10px;
+    justify-content: center;
   }
-  
-  .social-icons a {
-    color: white;
-    font-size: 24px;
-    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .social-icons a:hover {
-    transform: scale(1.1);
-    color: #4A4AFF;
+  to {
+    opacity: 1;
   }
-  
-  /* Feedback Section */
-  .footer-feedback p {
-    font-size: 14px;
-    margin-bottom: 10px;
-  }
-  
-  .footer-feedback textarea {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    resize: none;
-    min-height: 80px;
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  .footer-feedback button {
-    margin-top: 10px;
-    background: #581ade;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s ease, transform 0.2s ease;
-  }
-  
-  .footer-feedback button:hover {
-    background: #5321f7;
-    transform: scale(1.05);
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .footer {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-  
-    .footer-left, .footer-center, .footer-feedback {
-      text-align: center;
-    }
-  
-    .social-icons {
-      justify-content: center;
-    }
-  }
-  
+}
+/* Profile Popup */
+.profile-popup {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: white;
+  padding: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 220px;
+  z-index: 1000;
+}
+
+.profile-popup p {
+  margin: 5px 0;
+}
+
+.profile-popup button {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Profile Link */
+.profile-link {
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Assignments Cards */
+.assignment-card {
+  border-radius: 12px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.assignment-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Smooth animations */
+.submit-card {
+  background: linear-gradient(135deg, #ff4d4d, #ff9966);
+  color: white;
+}
+
+.submitted-card {
+  background: linear-gradient(135deg, #4CAF50, #66BB6A);
+  color: white;
+}

@@ -1,9 +1,9 @@
 import React from "react";
 import { FaEnvelope, FaLock, FaBuilding } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import "./SignIn.css";
+import "./signin.css";
 
-const SignIn = () => {
+const SignInstd = () => {
     const navigate = useNavigate();
 
     return (
@@ -54,4 +54,4 @@ const SignIn = () => {
     );
 };
 
-export default SignIn;
+export default SignInstd;

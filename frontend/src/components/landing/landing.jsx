@@ -1,13 +1,13 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import {useState, useEffect} from "react"; // Import useNavigate for navigation
+import { useNavigate } from "react-router-dom"; // ✅ Correct import
 import "./LandingPage.css";
-import { FaInstagram, FaFacebook, FaEnvelope, FaLinkedin } from "react-icons/fa";
+import { FaInstagram, FaFacebook, FaEnvelope, FaLinkedin, FaSun, FaMoon } from "react-icons/fa";
 import { CloudUpload, Search, Feedback, School, Assessment, AutoFixHigh } from "@mui/icons-material";
 
 const LandingPage = () => {
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate(); 
 
-  // Replace with actual endpoint
   const handleGetStarted = () => {
     navigate("/nxtland");
   };
@@ -15,6 +15,18 @@ const LandingPage = () => {
   const handleExploreNow = () => {
     navigate("/nxtland");
   };
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("darkMode") === "true";
+  });
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
 
   return (
     <div className="container">
@@ -22,11 +34,14 @@ const LandingPage = () => {
       <header className="header">
         <div className="logo">EduAI<span>Assist</span></div>
         <nav>
-        <a href="/land">Home</a>
+          <a href="/land">Home</a>
           <a href="#features">Features</a>
           <a href="#faq">FAQ</a>
           <a href="#contact">Contact Us</a>
           <button className="cta-button" onClick={handleGetStarted}>Get Started</button>
+          <button className="dark-mode-toggle" onClick={() => setDarkMode(!darkMode)}>
+            {darkMode ? <FaSun /> : <FaMoon />}
+          </button>
         </nav>
       </header>
 

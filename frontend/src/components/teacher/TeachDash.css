@@ -1,0 +1,240 @@
+.dashboard-wrapper {
+    background-color: #f5f7fb;
+    min-height: 100vh;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .app-bar {
+    background-color: #e5ecfc !important;
+    border-radius: 8px !important;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  .logo-icon {
+    color: #4A4AFF;
+    margin-right: 8px;
+  }
+  
+  .logo-text {
+    color: #4A4AFF !important;
+    font-weight: bold;
+  }
+  
+  .logo-highlight {
+    color: #FF66B2;
+  }
+  
+  .logout-button {
+    background-color: #581ade !important;
+    color: white !important;
+    padding: 10px 20px !important;
+    border-radius: 5px !important;
+    font-weight: bold !important;
+    transition: background 0.3s ease, transform 0.2s ease !important;
+  }
+  
+  .logout-button:hover {
+    background-color: #5321f7 !important;
+    transform: scale(1.05);
+  }
+  
+  .metric-card {
+    background-color: rgb(84, 125, 214) !important;
+    color: white !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 16px !important;
+    transition: transform 0.3s ease !important;
+    cursor: pointer;
+  }
+  
+  .metric-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card-menu-button {
+    color: white !important;
+  }
+  
+  .card-title {
+    margin-top: 16px !important;
+    margin-bottom: 8px !important;
+    font-weight: 600 !important;
+  }
+  
+  .card-description {
+    opacity: 0.9;
+  }
+  
+  .section-title {
+    margin-bottom: 24px !important;
+    font-weight: bold !important;
+    color: #333;
+  }
+  
+  .data-grid-paper {
+    padding: 24px;
+    background-color: #ffffff;
+}
+
+  
+  /* ... (rest of the styles remain the same) */
+  .dashboard-wrapper {
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .app-bar {
+    background-color: #4a4aff;
+    padding: 10px 20px;
+  }
+  
+  .logo-icon {
+    font-size: 32px;
+    color: rgb(239, 140, 140);
+  }
+  
+  .logo-text {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 8px;
+  }
+  
+  .logo-highlight {
+    color: #ff66b2;
+  }
+  
+  .stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7f7f7;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feedback-chip {
+    background-color: #f0f0f0;
+    border: 1px solid #cccccc;
+  }
+  
+  .progress-bar.high {
+    background-color: #4caf50;
+  }
+  
+  .progress-bar.medium {
+    background-color: #ff9800;
+  }
+  
+  .progress-bar.low {
+    background-color: #f44336;
+  }
+  
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    background: #333;
+    color: white;
+    padding: 30px 10%;
+    padding-left: 70px;
+    padding-right: 70px;
+    text-align: left;
+  }
+  
+  .footer-left, .footer-center, .footer-feedback {
+    flex: 1;
+    min-width: 280px;
+    margin-bottom: 20px;
+  }
+  
+  .footer-left h3, .footer-center h3, .footer-feedback h3 {
+    color: #4A4AFF;
+    margin-bottom: 15px;
+  }
+  
+  .footer-left span {
+    color: #FF66B2;
+  }
+  
+  .footer-left p {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .contact-footer {
+    margin-top: 20px;
+  }
+  
+  .contact-footer p {
+    font-size: 14px;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+  }
+  
+  .social-icons a {
+    color: white;
+    font-size: 24px;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  
+  .social-icons a:hover {
+    transform: scale(1.1);
+    color: #4A4AFF;
+  }
+  
+  .footer-feedback p {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .footer-feedback textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    resize: none;
+    min-height: 80px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .footer-feedback button {
+    margin-top: 10px;
+    background: #581ade;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .footer-feedback button:hover {
+    background: #5321f7;
+    transform: scale(1.05);
+  }
+  
+  @media (max-width: 768px) {
+    .footer {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .footer-left, .footer-center, .footer-feedback {
+      text-align: center;
+    }
+  
+    .social-icons {
+      justify-content: center;
+    }
+  }

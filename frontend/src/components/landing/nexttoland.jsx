@@ -25,13 +25,13 @@ const NextLand = () => {
         <p>Select your role to proceed</p>
 
         <div className="login-container">
-          <div className="login-box" onClick={() => navigate("/teacher-dashboard")}>
+          <div className="login-box" onClick={() => navigate("/signin")}>
             <h2>Teacher Login</h2>
             <p>Access AI tools for automated grading, analytics, and more.</p>
             <button className="cta-button">Login as Teacher</button>
           </div>
 
-          <div className="login-box" onClick={() => navigate("/student-dashboard")}>
+          <div className="login-box" onClick={() => navigate("/signinstd")}>
             <h2>Student Login</h2>
             <p>Get personalized feedback, progress tracking, and study support.</p>
             <button className="cta-button">Login as Student</button>
