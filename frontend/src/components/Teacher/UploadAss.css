@@ -1,0 +1,337 @@
+/* General Styling */
+.teacher-interface {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f5f7fb;
+    color: #333;
+}
+
+/* Navigation Container */
+.nav-container {
+    background: #ffffff;
+    padding: 15px 30px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;  /* Aligns nav links to the left */
+    align-items: center;
+}
+
+/* Navigation Links Styling */
+.nav-links {
+    display: flex;
+    gap: 20px;
+    padding: 10px;
+}
+
+.nav-item {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 25px;
+    margin-top: 15px;
+    color: #3b82f6;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-item:hover {
+    background: #3b82f6;
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+/* Dynamic Content Section (Filling Space) */
+.main-content {
+    flex: 1;  /* Makes it expand between header and footer */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centers the sections */
+    width: 100%;
+}
+
+/* Section Styling */
+.students-section, .assignments-section, .performance-section {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    width: 85%;  /* Ensures proper fit */
+    text-align: center;
+}
+
+/* Hover Effects */
+.students-section:hover, .assignments-section:hover, .performance-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    background: #f9f9ff;
+}
+
+/* Headings */
+.students-section h2, .assignments-section h2, .performance-section h2 {
+    color: #2d73ec;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* List Styling */
+.students-section ul, .assignments-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.students-section li, .assignments-section li {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    background: #e8e8ff;
+    transition: all 0.2s ease-in-out;
+}
+
+.students-section li:hover, .assignments-section li:hover {
+    background: #d1d1ff;
+    transform: scale(1.05);
+}
+
+/* Performance Section Styling */
+.performance-section canvas {
+    max-width: 100%;
+}
+
+
+
+
+
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background: #e5ecfc;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4A4AFF;
+}
+
+.logo span {
+    color: #FF66B2;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+.cta-button {
+    background: #581ade;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+
+@keyframes fadeIn {
+    0% {
+      opacity: 0.1;
+    }
+    100% {
+      opacity: 0.5;
+    }
+  }
+  
+
+.cta-button:hover {
+    background: #5321f7;
+    transform: scale(1.05);
+}
+  
+
+  
+  
+  /* Footer */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    background: #333;
+    color: white;
+    padding: 30px 10%;
+    padding-left: 70px;
+    padding-right: 70px;
+    text-align: left;
+  }
+  
+  .footer-left, .footer-center, .footer-feedback {
+    flex: 1;
+    min-width: 280px; /* Ensures responsiveness */
+    margin-bottom: 20px;
+  }
+  
+  .footer-left h3, .footer-center h3, .footer-feedback h3 {
+    color: #4A4AFF;
+    margin-bottom: 15px;
+  }
+  
+  .footer-left span {
+    color: #FF66B2;
+  }
+  
+  .footer-left p {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .contact-footer {
+    margin-top: 20px;
+  }
+  
+  .contact-footer p {
+    font-size: 14px;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+  }
+  
+  .social-icons a {
+    color: white;
+    font-size: 24px;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  
+  .social-icons a:hover {
+    transform: scale(1.1);
+    color: #4A4AFF;
+  }
+  
+  /* Feedback Section */
+  .footer-feedback p {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .footer-feedback textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    resize: none;
+    min-height: 80px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .footer-feedback button {
+    margin-top: 10px;
+    background: #581ade;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .footer-feedback button:hover {
+    background: #5321f7;
+    transform: scale(1.05);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .footer {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .footer-left, .footer-center, .footer-feedback {
+      text-align: center;
+    }
+  
+    .social-icons {
+      justify-content: center;
+    }
+  }
+  /* Cloud Style for Each Step */
+.cloud-box {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 50%; /* This makes it circular */
+    width: 250px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    position: relative;
+}
+
+.cloud-box:hover {
+    transform: scale(1.1); /* Slight zoom effect */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cloud-box h3 {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+.cloud-box p {
+    font-size: 14px;
+    color: #666;
+    max-width: 80%;
+}
+
+.icon {
+    color: #4A4AFF;
+    font-size: 50px;
+    animation: float 3s infinite ease-in-out; /* Floating animation */
+}
+
+/* Floating Animation */
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}

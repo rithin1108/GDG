@@ -1,17 +1,31 @@
-import express from 'express';
-import multer from 'multer';
-import { MongoClient } from 'mongodb';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import Tesseract from 'tesseract.js';
-import mammoth from 'mammoth';
-import fs from 'fs';
+import express from "express";
+import multer from "multer";
+import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
 
-dotenv.config({ path: './util/.env' }); // Load environment variables
+import cors from "cors";
+import dotenv from "dotenv";
+import Tesseract from "tesseract.js";
+import mammoth from "mammoth";
+// import authRoutes from "./routes/authRoutes.js"; // ✅ Correct 
+import connectDB from "./util/db.js";
+import classRoutes from "./routes/classRoutes.js";
+// import authRoutes from "./routes/authRoutes.js"; // Import authentication routes
+import signupRoutes from "./routes/signupRoutes.js"; // Import the signup routes
+
+
+
+dotenv.config({ path: "./util/.env" }); // Load environment variables
 
 const app = express();
-const port = process.env.PORT || 5001;
-app.use(cors());
+const port = process.env.PORT;
+
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(express.json()); // Middleware to parse JSON requests
+
+// ✅ Use authRoutes properly
+// app.use("/api/auth", authRoutes);
+app.use("/api/auth", signupRoutes); // Use signup routes
 
 // Check if MongoDB connection string is provided
 if (!process.env.MONGO_CONNECTION_STRING) {
@@ -19,22 +33,27 @@ if (!process.env.MONGO_CONNECTION_STRING) {
   process.exit(1);
 }
 
-const mongoURI = process.env.MONGO_CONNECTION_STRING;
-const client = new MongoClient(mongoURI);
-let db, collection;
+// const mongoURI = process.env.MONGO_CONNECTION_STRING;
+// const client = new MongoClient(mongoURI);
+// let db, collection;
 
-// Connect to MongoDB
-async function connectDB() {
-  try {
-    await client.connect();
-    console.log("✅ Connected to MongoDB successfully");
-    db = client.db("GDG");
-    collection = db.collection("assignments");
-  } catch (error) {
-    console.error("❌ MongoDB connection error:", error);
-    process.exit(1);
-  }
-}
+// // Connect to MongoDB
+// async function connectDB() {
+//   try {
+//     await client.connect();
+//     console.log("✅ Connected to MongoDB successfully");
+//     db = client.db("GDG");
+//     collection = db.collection("assignments");
+//   } catch (error) {
+//     console.error("❌ MongoDB connection error:", error);
+//     process.exit(1);
+//   }
+// }
+// connectDB();
+
+// Routes
+app.use("/api/class", classRoutes);
+// app.use("/api/auth", authRoutes); // Add authentication routes
 
 connectDB();
 
@@ -48,39 +67,42 @@ const upload = multer({
       return cb(new Error("Invalid file type. Only documents and images are allowed."), false);
     }
     cb(null, true);
-  }
+  },
 });
 
-// Upload file endpoint
+// Extract Text Function
 async function extractText(fileBuffer, contentType) {
   try {
-    if (contentType === 'application/pdf') {
-      
-      return console.log("Processing PDF file...");;
-    } else if (contentType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+    if (contentType === "application/pdf") {
+      return console.log("Processing PDF file...");
+    } else if (
+      contentType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ) {
       console.log("Processing Word document...");
       return (await mammoth.extractRawText({ buffer: fileBuffer })).value;
-    } else if (contentType.startsWith('image/')) {
+    } else if (contentType.startsWith("image/")) {
       console.log("Processing image...");
-      const { data: { text } } = await Tesseract.recognize(fileBuffer, 'eng');
+      const {
+        data: { text },
+      } = await Tesseract.recognize(fileBuffer, "eng");
       return text;
     }
-    return 'Unsupported file format';
+    return "Unsupported file format";
   } catch (error) {
-    console.error('❌ Error extracting text:', error);
-    return 'Error extracting text';
+    console.error("❌ Error extracting text:", error);
+    return "Error extracting text";
   }
 }
 
 // Upload and process the file
-app.post('/upload', upload.single('file'), async (req, res) => {
+app.post("/upload", upload.single("file"), async (req, res) => {
   try {
     if (!req.file) {
-      return res.status(400).json({ success: false, message: 'No file uploaded.' });
+      return res.status(400).json({ success: false, message: "No file uploaded." });
     }
 
     // Log file info for debugging
-    console.log('Uploaded file details:', req.file);
+    console.log("Uploaded file details:", req.file);
 
     const extractedText = await extractText(req.file.buffer, req.file.mimetype);
 
@@ -91,22 +113,21 @@ app.post('/upload', upload.single('file'), async (req, res) => {
       uploadedAt: new Date(),
       extractedText,
     };
+    const collection = mongoose.connection.collection('assignments');
 
     await collection.insertOne(fileData);
 
     res.status(200).json({
       success: true,
-      message: 'File uploaded and text extracted successfully.',
+      message: "File uploaded and text extracted successfully.",
       fileName: req.file.originalname,
       extractedText,
     });
   } catch (error) {
-    console.error('❌ Error uploading file:', error);
+    console.error("❌ Error uploading file:", error);
     res.status(500).json({ success: false, message: `Error uploading file: ${error.message}` });
   }
 });
-
-
 
 // Start the server
 app.listen(port, () => {

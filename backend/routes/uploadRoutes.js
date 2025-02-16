@@ -1,51 +1,80 @@
-import express from 'express';
-const multer = require('multer');
-const { MongoClient } = require('mongodb');
-require('dotenv').config();
+// import express from "express";
+// import multer from "multer";
+// import Tesseract from "tesseract.js";
+// import mammoth from "mammoth";
 
-const app = express();
-const port = 5001;
 
-// Database connection
-const mongoURI = process.env.MONGO_CONNECTION_STRING;
-const client = new MongoClient(mongoURI);
+// import Assignment from "../models/Assignment.js";
 
-client.connect()
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((error) => console.error('MongoDB connection error:', error));
+// const router = express.Router();
 
-const db = client.db("GDG");
-const collection = db.collection("assignments");
+// // Multer Storage
+// const storage = multer.memoryStorage();
+// const upload = multer({
+//   storage: storage,
+//   limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+//   fileFilter: (req, file, cb) => {
+//     if (!file.mimetype.startsWith("application/") && !file.mimetype.startsWith("image/")) {
+//       return cb(new Error("Invalid file type. Only documents and images are allowed."), false);
+//     }
+//     cb(null, true);
+//   },
+// });
 
-// Multer storage setup
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+// // Extract Text Function
+// async function extractText(fileBuffer, contentType) {
+//   try {
+//     if (contentType === "application/pdf") {
+//       console.log("Processing PDF file...");
+//       return "PDF extraction not implemented"; // Implement PDF extraction if needed
+//     } else if (contentType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+//       console.log("Processing Word document...");
+//       return (await mammoth.extractRawText({ buffer: fileBuffer })).value;
+//     } else if (contentType.startsWith("image/")) {
+//       console.log("Processing image...");
+//       const {
+//         data: { text },
+//       } = await Tesseract.recognize(fileBuffer, "eng");
+//       return text;
+//     }
+//     return "Unsupported file format";
+//   } catch (error) {
+//     console.error("❌ Error extracting text:", error);
+//     return "Error extracting text";
+//   }
+// }
 
-// Upload endpoint for file
-app.post('/upload', upload.single('file'), async (req, res) => {
-  try {
-    // Check if file is uploaded
-    if (!req.file) {
-      return res.status(400).send('No file uploaded.');
-    }
+// // Upload and Process the File
+// router.post("/", upload.single("file"), async (req, res) => {
+//   try {
+//     if (!req.file) {
+//       return res.status(400).json({ success: false, message: "No file uploaded." });
+//     }
 
-    // File metadata to be stored in the database
-    const fileData = {
-      fileName: req.file.originalname,
-      contentType: req.file.mimetype,
-      size: req.file.size,
-      uploadedAt: new Date(),
-    };
+//     console.log("Uploaded file details:", req.file);
 
-    // Insert file data into MongoDB
-    await collection.insertOne(fileData);
-    res.status(200).send('File uploaded successfully.');
-  } catch (error) {
-    res.status(500).send(`Error uploading file: ${error.message}`);
-  }
-});
+//     const extractedText = await extractText(req.file.buffer, req.file.mimetype);
 
-// Server listener
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-});
+//     const fileData = new Assignment({
+//       fileName: req.file.originalname,
+//       contentType: req.file.mimetype,
+//       size: req.file.size,
+//       uploadedAt: new Date(),
+//       extractedText,
+//     });
+
+//     await fileData.save();
+
+//     res.status(200).json({
+//       success: true,
+//       message: "File uploaded and text extracted successfully.",
+//       fileName: req.file.originalname,
+//       extractedText,
+//     });
+//   } catch (error) {
+//     console.error("❌ Error uploading file:", error);
+//     res.status(500).json({ success: false, message: `Error uploading file: ${error.message}` });
+//   }
+// });
+
+// export default router;

@@ -9,6 +9,8 @@ import TeacherDashboard from './components/Teacher/TeachDash';
 import ForgotPassword from './components/logindetails/forgotPass';
 import SignIn from './components/logindetails/SignIn';
 import SignUp from './components/logindetails/SignUp';
+import TeacherInterface from './components/Teacher/TeacherInterface';
+import TeacherUpload from './components/Teacher/UploadAss';
 
 function App() {
   return (
@@ -28,6 +30,9 @@ function App() {
         <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/teach" element={<TeacherInterface />} />
+        <Route path="/upload" element={<TeacherUpload />} />
+
 
       </Routes>
     </BrowserRouter>

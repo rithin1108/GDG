@@ -1,7 +1,7 @@
 import React from "react";
-import { FaEnvelope, FaLock } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaBuilding } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import "./Signin.css";
+import "./SignIn.css";
 
 const SignIn = () => {
     const navigate = useNavigate();
@@ -12,6 +12,13 @@ const SignIn = () => {
                 <button className="back-button" onClick={() => navigate(-1)}>←</button>
                 <h2 className="signin-title">Welcome back to EduAIAssist!</h2>
                 <p className="signin-subtitle">The faster you fill up, the faster you get a chance to change your life!</p>
+
+                {/* Institution Name Input */}
+                <label className="input-label">Institution Name</label>
+                <div className="input-group">
+                    <FaBuilding className="input-icon" />
+                    <input type="text" placeholder="Enter your institution name" className="signin-input" />
+                </div>
 
                 {/* Email Input */}
                 <label className="input-label">Email</label>
@@ -32,7 +39,7 @@ const SignIn = () => {
                     <label>
                         <input type="checkbox" /> Remember me
                     </label>
-                    <a href="/forgot-password" className="forgot-password">Forgot Password</a>
+                    <a href="/forgot" className="forgot-password">Forgot Password</a>
                 </div>
 
                 {/* Sign In Button */}
