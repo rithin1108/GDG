@@ -41,67 +41,6 @@ import {
 } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import "./TeachDash.css";
-import { FaInstagram, FaFacebook, FaEnvelope, FaLinkedin } from "react-icons/fa"; 
-import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-
-
-const Footer = () => {
-  const navigate = useNavigate();
-
-  return (
-    <footer className="footer">
-            <div className="footer-left">
-              <h3>EduAI<span>Assist</span></h3>
-              <p>Enhancing education through AI-powered solutions.</p>
-              <p>&copy; 2025 EduAI Assist. All rights reserved.</p>
-            </div>
-    
-            {/* Social Media Links */}
-            <div className="footer-center">
-              <h3>Follow Us</h3>
-              <div className="social-icons">
-                <a href="#" target="_blank"><FaInstagram /></a>
-                <a href="#" target="_blank"><FaFacebook /></a>
-                <a href="mailto:support@eduaiassist.com"><FaEnvelope /></a>
-                <a href="#" target="_blank"><FaLinkedin /></a>
-              </div>
-            </div>
-    
-            {/* Feedback Section */}
-            <div className="footer-feedback">
-              <h3>Feedback</h3>
-              <p>We value your feedback! Let us know how we can improve.</p>
-              <textarea placeholder="Enter your feedback here..."></textarea>
-              <button className="cta-button">Submit</button>
-            </div>
-          </footer>
-  );
-  
-}
-
-
-const assignmentData = {
-  "Class 10-A": [
-    { assignment: "Math Test 1", avgScore: 85, totalSubmissions: 30 },
-    { assignment: "Science Test 1", avgScore: 90, totalSubmissions: 28 },
-    { assignment: "English Essay", avgScore: 78, totalSubmissions: 32 },
-  ],
-  "Class 10-B": [
-    { assignment: "Math Test 1", avgScore: 88, totalSubmissions: 35 },
-    { assignment: "Science Test 1", avgScore: 92, totalSubmissions: 33 },
-    { assignment: "English Essay", avgScore: 80, totalSubmissions: 38 },
-  ],
-  "Class 11-A": [
-    { assignment: "Math Test 1", avgScore: 90, totalSubmissions: 32 },
-    { assignment: "Science Test 1", avgScore: 95, totalSubmissions: 30 },
-    { assignment: "English Essay", avgScore: 85, totalSubmissions: 29 },
-  ],
-};
-
-
-
-
 
 // Enhanced theme with additional colors and shadows
 const theme = createTheme({
@@ -186,7 +125,9 @@ const columns = [
         <LinearProgress
           variant="determinate"
           value={params.value}
-          className={`progress-bar ${params.value >= 90 ? "high" : params.value >= 70 ? "medium" : "low"}`}
+          className={`progress-bar ${
+            params.value >= 90 ? "high" : params.value >= 70 ? "medium" : "low"
+          }`}
         />
       </Box>
     ),
@@ -315,13 +256,13 @@ const TeacherDashboard = () => {
           <Toolbar>
             <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
               <School className="logo-icon" />
-              <Typography variant="h5" className="logo-text">
+              <Typography variant="h6" className="logo-text">
                 Edu<span className="logo-highlight">AI</span> Assist
               </Typography>
-              <FormControl sx={{ ml: 113, minWidth: 200 }}>
+              <FormControl sx={{ ml: 4, minWidth: 200 }}>
                 <Select
-                  value={selectedClass} 
-                  onChange={handleClassChange}  
+                  value={selectedClass}
+                  onChange={handleClassChange}
                   variant="outlined"
                   size="small"
                   sx={{ 
@@ -344,61 +285,93 @@ const TeacherDashboard = () => {
               <IconButton>
                 <Notifications />
               </IconButton>
+              <Button className="logout-button">Logout</Button>
             </Box>
           </Toolbar>
-        </AppBar>
-        <Container maxWidth="lg" sx={{ mt: 4 }}>
-          <Tabs value={currentTab} onChange={handleTabChange} indicatorColor="primary" textColor="primary">
+          <Tabs 
+            value={currentTab} 
+            onChange={handleTabChange}
+            centered
+            sx={{ bgcolor: 'white', borderRadius: '0 0 8px 8px' }}
+          >
             <Tab label="Overview" />
             <Tab label="Assignments" />
             <Tab label="Analytics" />
           </Tabs>
-          {currentTab === 0 && (
-            <Box>
-              <ClassStatsCard stats={classStats[selectedClass]} />
-              <FileUploadComponent selectedClass={selectedClass} />
-            </Box>
-          )}
-          {currentTab === 1 && (
-            <Box>
-              <Paper elevation={3} sx={{ p: 3, borderRadius: 2, mb: 4 }}>
-                <Typography variant="h6" gutterBottom>
-                  Assignment-Wise Performance for {selectedClass}
-                </Typography>
-                <Grid container spacing={3}>
-                  {assignmentData[selectedClass].map((assignment, index) => (
-                    <Grid item xs={12} sm={4} key={index}>
-                      <Card elevation={3} sx={{ p: 3, borderRadius: 2 }}>
-                        <Typography variant="h6">{assignment.assignment}</Typography>
-                        <Typography variant="body2" color="textSecondary">
-                          Average Score: {assignment.avgScore}%
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary">
-                          Total Submissions: {assignment.totalSubmissions}
-                        </Typography>
-                      </Card>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Paper>
-            </Box>
-          )}
-          {currentTab === 2 && (
-            <Box>
-              <Paper elevation={3} sx={{ p: 3, borderRadius: 2, mb: 4 }}>
-                <Typography variant="h6" gutterBottom>Analytics</Typography>
-                <DataGrid
-                  rows={classData[selectedClass]}
-                  columns={columns}
-                  pageSize={5}
-                  autoHeight
-                  checkboxSelection
-                />
-              </Paper>
-            </Box>
-          )}
+        </AppBar>
+
+        <Container maxWidth="xl" sx={{ mt: 4 }}>
+          <Alert severity="info" sx={{ mb: 3 }}>
+            Currently viewing: {selectedClass} • Total Students: {classStats[selectedClass].totalStudents}
+          </Alert>
+          
+          <ClassStatsCard stats={classStats[selectedClass]} />
+
+          <Grid container spacing={3} sx={{ mb: 4 }}>
+            {[
+              {
+                icon: <Assessment sx={{ fontSize: 40 }} />,
+                title: "Upload Assignments",
+                description: "Save time with AI-driven assignment evaluation",
+                metric: "+24% this week",
+              },
+              {
+                icon: <Feedback sx={{ fontSize: 40 }} />,
+                title: "Personalized Feedback",
+                description: "Instant, tailored guidance for each student",
+                metric: "+18% feedback rate",
+              },
+              {
+                icon: <AutoGraph sx={{ fontSize: 40 }} />,
+                title: "Performance Analytics",
+                description: "Track student progress and improvement trends",
+                metric: "+32% improvement",
+              },
+            ].map((card, index) => (
+              <Grid item xs={12} sm={4} key={index}>
+                <Card className="metric-card">
+                  <CardContent sx={{ p: 3 }}>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                      {card.icon}
+                      <IconButton size="small" className="card-menu-button">
+                        <MoreVert />
+                      </IconButton>
+                    </Box>
+                    <Typography variant="h5" className="card-title">
+                      {card.title}
+                    </Typography>
+                    <Typography variant="body2" className="card-description">
+                      {card.description}
+                    </Typography>
+                    <Box sx={{ mt: 2, display: "flex", alignItems: "center", gap: 1 }}>
+                      <TrendingUp />
+                      <Typography variant="body2">{card.metric}</Typography>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+
+          <FileUploadComponent selectedClass={selectedClass} />
+
+          <Box sx={{ height: 400, width: "100%" }}>
+            <Typography variant="h5" className="section-title">
+              Student Assignments Overview - {selectedClass}
+            </Typography>
+            <Paper className="data-grid-paper">
+              <DataGrid
+                rows={classData[selectedClass]}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                checkboxSelection
+                disableSelectionOnClick
+                className="data-grid"
+              />
+            </Paper>
+          </Box>
         </Container>
-        <Footer />
       </div>
     </ThemeProvider>
   );

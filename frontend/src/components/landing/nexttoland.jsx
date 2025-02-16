@@ -25,13 +25,21 @@ const NextLand = () => {
         <p>Select your role to proceed</p>
 
         <div className="login-container">
+<<<<<<< HEAD
           <div className="login-box" onClick={() => navigate("/signin")}>
+=======
+          <div className="login-box" onClick={() => navigate("/teacher-dashboard")}>
+>>>>>>> 347c94b634fd65ae938bedc5147de9fcdc38257b
             <h2>Teacher Login</h2>
             <p>Access AI tools for automated grading, analytics, and more.</p>
             <button className="cta-button">Login as Teacher</button>
           </div>
 
+<<<<<<< HEAD
           <div className="login-box" onClick={() => navigate("/signinstd")}>
+=======
+          <div className="login-box" onClick={() => navigate("/student-dashboard")}>
+>>>>>>> 347c94b634fd65ae938bedc5147de9fcdc38257b
             <h2>Student Login</h2>
             <p>Get personalized feedback, progress tracking, and study support.</p>
             <button className="cta-button">Login as Student</button>

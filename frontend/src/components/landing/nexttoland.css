@@ -56,7 +56,10 @@ body {
 /* Login Section */
 .login-section {
     padding: 60px 20px;
+<<<<<<< HEAD
     background: #a8cbfc;
+=======
+>>>>>>> 347c94b634fd65ae938bedc5147de9fcdc38257b
   }
   
   .login-section h1 {
@@ -263,5 +266,9 @@ body {
     .social-icons {
       justify-content: center;
     }
+<<<<<<< HEAD
   }
   
+=======
+  }
+>>>>>>> 347c94b634fd65ae938bedc5147de9fcdc38257b

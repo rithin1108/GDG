@@ -10,7 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
     "@google-cloud/vision": "^4.3.2",
+=======
+>>>>>>> 347c94b634fd65ae938bedc5147de9fcdc38257b
     "@google/generative-ai": "^0.21.0",
     "axios": "^1.7.9",
     "bcryptjs": "^2.4.3",
@@ -18,6 +21,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+<<<<<<< HEAD
     "fs": "^0.0.1-security",
     "mongoose": "^8.9.6",
     "multer": "^1.4.5-lts.1",
@@ -26,4 +30,15 @@
   },
   "keywords": [],
   "description": ""
+=======
+    "mammoth": "^1.9.0",
+    "mongodb": "^6.13.0",
+    "mongoose": "^8.9.5",
+    "multer": "^1.4.5-lts.1",
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^6.10.0",
+    "pdf-parse": "^1.1.1",
+    "tesseract.js": "^6.0.0"
+  }
+>>>>>>> 347c94b634fd65ae938bedc5147de9fcdc38257b
 }

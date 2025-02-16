@@ -2,9 +2,18 @@ import dotenv from 'dotenv';
 dotenv.config({ path: './util/.env' }); // Correct path!
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
+<<<<<<< HEAD
 const apiKey = process.env.GEMINI_API_KEY; 
 
 console.log("API Key in geminiApi.js:", apiKey); 
+=======
+
+// ... rest of your code (API key access, model setup, etc.)
+
+const apiKey = process.env.GEMINI_API_KEY; // Accessing from environment variable
+
+console.log("API Key in geminiApi.js:", apiKey); // Check if the key is loaded
+>>>>>>> 347c94b634fd65ae938bedc5147de9fcdc38257b
 
 const genAI = new GoogleGenerativeAI(apiKey);
 
