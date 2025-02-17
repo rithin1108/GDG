@@ -145,65 +145,141 @@ const columns = [
   },
 ];
 
-const FileUploadComponent = ({ selectedClass }) => {
-  const [file, setFile] = useState(null);
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+// FRONTEND - FileUploadComponent.js
+const FileUploadComponent = ({ selectedClass }) => {
+  const [assignmentFile, setAssignmentFile] = useState(null);
+  const [answerFile, setAnswerFile] = useState(null);
+
+  const handleAssignmentChange = (event) => {
+    setAssignmentFile(event.target.files[0]);
   };
 
-  const handleUpload = async () => {
-    if (!file) {
-      alert("Please select a file to upload.");
+  const handleAnswerChange = (event) => {
+    setAnswerFile(event.target.files[0]);
+  };
+
+  const handleAssignmentUpload = async () => {
+    if (!assignmentFile) {
+      alert("Please select an assignment file to upload.");
       return;
     }
 
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", assignmentFile);
     formData.append("class", selectedClass);
+    formData.append("type", "assignment");
 
     try {
-      const response = await axios.post("http://localhost:5001/upload", formData, {
+      const response = await axios.post("http://localhost:5001/upload/assignment", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       alert(response.data.message);
+      setAssignmentFile(null);
     } catch (error) {
-      console.error("Error uploading file:", error);
-      alert(`Error uploading file: ${error.message}`);
+      console.error("Error uploading assignment:", error);
+      alert(`Error uploading assignment: ${error.message}`);
     }
   };
+
+  const handleAnswerUpload = async () => {
+    if (!answerFile) {
+      alert("Please select an answer file to upload.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", answerFile);
+    formData.append("class", selectedClass);
+    formData.append("type", "answer");
+
+    try {
+      const response = await axios.post("http://localhost:5001/upload/answer", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      alert(response.data.message);
+      setAnswerFile(null);
+    } catch (error) {
+      console.error("Error uploading answer:", error);
+      alert(`Error uploading answer: ${error.message}`);
+    }
+  };
+
+  // Rest of the component remains the same
+  
+
 
   return (
     <Paper elevation={3} sx={{ p: 3, borderRadius: 2, mb: 4 }}>
       <Typography variant="h6" gutterBottom>
-        Upload Assignment for {selectedClass}
+        Upload Files for {selectedClass}
       </Typography>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <Button
-          variant="outlined"
-          component="label"
-          startIcon={<Assignment />}
-        >
-          Choose File
-          <input type="file" hidden onChange={handleFileChange} />
-        </Button>
-        {file && (
-          <Typography variant="body2" color="textSecondary">
-            Selected: {file.name}
-          </Typography>
-        )}
-      </Box>
-      <Button 
-        variant="contained" 
-        color="primary" 
-        sx={{ mt: 2 }} 
-        onClick={handleUpload}
-        disabled={!file}
-      >
-        Upload Assignment
-      </Button>
+      <Grid container spacing={3}>
+        {/* Assignment Upload Section */}
+        <Grid item xs={12} md={6}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Typography variant="subtitle1">Assignment Upload</Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Button
+                variant="outlined"
+                component="label"
+                startIcon={<Assignment />}
+              >
+                Choose Assignment
+                <input type="file" hidden onChange={handleAssignmentChange} />
+              </Button>
+              {assignmentFile && (
+                <Typography variant="body2" color="textSecondary">
+                  Selected: {assignmentFile.name}
+                </Typography>
+              )}
+            </Box>
+            <Button 
+              variant="contained" 
+              color="primary"
+              onClick={handleAssignmentUpload}
+              disabled={!assignmentFile}
+            >
+              Upload Assignment
+            </Button>
+          </Box>
+        </Grid>
+
+        {/* Answer Upload Section */}
+        <Grid item xs={12} md={6}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Typography variant="subtitle1">Answer Upload</Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Button
+                variant="outlined"
+                component="label"
+                startIcon={<Assignment />}
+                color="secondary"
+              >
+                Choose Answer
+                <input type="file" hidden onChange={handleAnswerChange} />
+              </Button>
+              {answerFile && (
+                <Typography variant="body2" color="textSecondary">
+                  Selected: {answerFile.name}
+                </Typography>
+              )}
+            </Box>
+            <Button 
+              variant="contained" 
+              color="secondary"
+              onClick={handleAnswerUpload}
+              disabled={!answerFile}
+            >
+              Upload Answer
+            </Button>
+          </Box>
+        </Grid>
+      </Grid>
     </Paper>
   );
 };

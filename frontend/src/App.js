@@ -11,7 +11,8 @@ import SignIn from './components/logindetails/SignIn';
 import SignUp from './components/logindetails/SignUp';
 import TeacherInterface from './components/Teacher/TeacherInterface';
 import TeacherUpload from './components/Teacher/UploadAss';
-
+import Chatbot from './components/student/ChatBot';
+import StdSignUp from './components/logindetails/SignUpStudent';
 function App() {
   return (
     // <div className="App">
@@ -32,8 +33,8 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/teach" element={<TeacherInterface />} />
         <Route path="/upload" element={<TeacherUpload />} />
-
-
+        <Route path="/chatbot" element={<Chatbot/>} />
+        <Route path="/stdsignup" element={<StdSignUp/>} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,0 +1,146 @@
+/* Main Container */
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #e6f4f1;
+    padding: 15px;
+}
+
+/* Card Style */
+.signup-card {
+    width: 95%;
+    max-width: 550px; /* Reduced from 600px */
+    background: white;
+    padding: 25px 25px; /* Reduced padding */
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    margin: auto;
+}
+
+/* Title */
+.signup-title {
+    font-size: 22px; /* Slightly smaller */
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 20px; /* Reduced margin */
+    padding-top: 5px; /* Reduced padding */
+}
+
+/* Form Grid Container */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px; /* Reduced gap */
+    width: 100%;
+    max-width: 500px; /* Reduced max-width */
+    margin: 0 auto;
+}
+
+/* Full Width Container */
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Input Fields Container */
+.input-group-container {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px; /* Reduced margin */
+}
+
+/* Input Field Headings */
+.input-label {
+    font-size: 13px; /* Smaller font */
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px; /* Reduced margin */
+    display: block;
+}
+
+/* Input Fields */
+.input-group {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 8px 12px; /* Reduced padding */
+    position: relative;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+/* Input Style */
+.signup-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 14px; /* Smaller font */
+    padding: 0 8px;
+    outline: none;
+    width: 100%;
+}
+
+/* Input Icon */
+.input-icon {
+    font-size: 14px; /* Smaller icon */
+    color: #6262fc;
+    margin-right: 8px;
+}
+
+/* Sign Up Button */
+.signup-button {
+    background: #6262fc;
+    color: white;
+    border: none;
+    padding: 10px 20px; /* Reduced padding */
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    width: 100%;
+    max-width: 500px; /* Match form width */
+    margin: 20px auto 0; /* Reduced margin */
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+/* Sign In Link */
+.signin-link {
+    margin-top: 15px; /* Reduced margin */
+    font-size: 13px; /* Smaller font */
+    color: #666;
+}
+
+/* Back Button */
+.back-button {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: none;
+    border: none;
+    font-size: 15px; /* Smaller font */
+    cursor: pointer;
+    padding: 6px 10px; /* Reduced padding */
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 580px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .signup-card {
+        padding: 20px 15px;
+    }
+    
+    .signup-title {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+}

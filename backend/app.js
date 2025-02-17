@@ -2,76 +2,66 @@ import express from "express";
 import multer from "multer";
 import { MongoClient } from "mongodb";
 import mongoose from "mongoose";
-
+import fs from "fs";
+import sharp from "sharp";
 import cors from "cors";
 import dotenv from "dotenv";
 import Tesseract from "tesseract.js";
 import mammoth from "mammoth";
-// import authRoutes from "./routes/authRoutes.js"; // ✅ Correct 
 import connectDB from "./util/db.js";
 import classRoutes from "./routes/classRoutes.js";
-// import authRoutes from "./routes/authRoutes.js"; // Import authentication routes
-import signupRoutes from "./routes/signupRoutes.js"; // Import the signup routes
-
-
+import signupRoutes from "./routes/signupRoutes.js";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import studentRoutes from "./routes/studentRoutes.js"; // Use .js extension explicitly
 
 dotenv.config({ path: "./util/.env" }); // Load environment variables
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 5001;
 
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-app.use(express.json()); // Middleware to parse JSON requests
+app.use(express.json());
 
-// ✅ Use authRoutes properly
-// app.use("/api/auth", authRoutes);
-app.use("/api/auth", signupRoutes); // Use signup routes
+const genAI = new GoogleGenerativeAI("AIzaSyCc9mXFOvmZ_UfarwTEQVQ2AMvxJQuENTo");
 
-// Check if MongoDB connection string is provided
-if (!process.env.MONGO_CONNECTION_STRING) {
-  console.error("❌ Error: MONGO_CONNECTION_STRING is not defined in .env file");
-  process.exit(1);
+// ✅ Ensure 'uploads' directory exists
+const uploadPath = "./uploads/";
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
 }
 
-// const mongoURI = process.env.MONGO_CONNECTION_STRING;
-// const client = new MongoClient(mongoURI);
-// let db, collection;
-
-// // Connect to MongoDB
-// async function connectDB() {
-//   try {
-//     await client.connect();
-//     console.log("✅ Connected to MongoDB successfully");
-//     db = client.db("GDG");
-//     collection = db.collection("assignments");
-//   } catch (error) {
-//     console.error("❌ MongoDB connection error:", error);
-//     process.exit(1);
-//   }
-// }
-// connectDB();
-
-// Routes
+app.use("/api/auth", signupRoutes);
 app.use("/api/class", classRoutes);
-// app.use("/api/auth", authRoutes); // Add authentication routes
+app.use("/api", studentRoutes); // All student routes prefixed with `/api`
 
 connectDB();
 
-// Multer storage setup (stores file in memory)
-const storage = multer.memoryStorage();
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
-  fileFilter: (req, file, cb) => {
-    if (!file.mimetype.startsWith("application/") && !file.mimetype.startsWith("image/")) {
-      return cb(new Error("Invalid file type. Only documents and images are allowed."), false);
-    }
-    cb(null, true);
-  },
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, uploadPath),
+  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
 });
+const upload = multer({ storage });
 
-// Extract Text Function
-async function extractText(fileBuffer, contentType) {
+const preprocessImage = async (filePath) => {
+  try {
+    console.log("🔍 Preprocessing image:", filePath);
+    const processedPath = filePath.replace(/\.(jpg|jpeg|png)$/, "-processed.png");
+
+    await sharp(filePath)
+      .grayscale()
+      .resize(800)
+      .normalize()
+      .toFile(processedPath);
+
+    console.log("✅ Preprocessing complete:", processedPath);
+    return processedPath;
+  } catch (error) {
+    console.error("❌ Preprocessing Error:", error);
+    return filePath;
+  }
+};
+
+async function extractText(fileBuffer, contentType, filePath = null) {
   try {
     if (contentType === "application/pdf") {
       return console.log("Processing PDF file...");
@@ -82,10 +72,9 @@ async function extractText(fileBuffer, contentType) {
       return (await mammoth.extractRawText({ buffer: fileBuffer })).value;
     } else if (contentType.startsWith("image/")) {
       console.log("Processing image...");
-      const {
-        data: { text },
-      } = await Tesseract.recognize(fileBuffer, "eng");
-      return text;
+      const processedPath = await preprocessImage(filePath);
+      const { data } = await Tesseract.recognize(processedPath, "eng");
+      return data.text.trim() || "No text detected";
     }
     return "Unsupported file format";
   } catch (error) {
@@ -94,42 +83,74 @@ async function extractText(fileBuffer, contentType) {
   }
 }
 
-// Upload and process the file
-app.post("/upload", upload.single("file"), async (req, res) => {
+app.post("/upload/assignment", upload.single("file"), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ success: false, message: "No file uploaded." });
     }
-
-    // Log file info for debugging
-    console.log("Uploaded file details:", req.file);
-
-    const extractedText = await extractText(req.file.buffer, req.file.mimetype);
-
-    const fileData = {
+    console.log("Uploading assignment:", req.file.originalname);
+    const extractedText = await extractText(req.file.buffer, req.file.mimetype, req.file.path);
+    const assignmentData = {
       fileName: req.file.originalname,
       contentType: req.file.mimetype,
       size: req.file.size,
       uploadedAt: new Date(),
       extractedText,
+      class: req.body.class,
+      type: "assignment",
     };
-    const collection = mongoose.connection.collection('assignments');
-
-    await collection.insertOne(fileData);
-
-    res.status(200).json({
-      success: true,
-      message: "File uploaded and text extracted successfully.",
-      fileName: req.file.originalname,
-      extractedText,
-    });
+    const assignmentsCollection = mongoose.connection.collection("assignments");
+    await assignmentsCollection.insertOne(assignmentData);
+    res.status(200).json({ success: true, message: "Assignment uploaded and processed successfully.", extractedText });
   } catch (error) {
-    console.error("❌ Error uploading file:", error);
-    res.status(500).json({ success: false, message: `Error uploading file: ${error.message}` });
+    console.error("❌ Error uploading assignment:", error);
+    res.status(500).json({ success: false, message: `Error uploading assignment: ${error.message}` });
   }
 });
 
-// Start the server
+app.post("/upload/answer", upload.single("file"), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: "No file uploaded." });
+    }
+    console.log("Uploading answer:", req.file.originalname);
+    const extractedText = await extractText(req.file.buffer, req.file.mimetype, req.file.path);
+    const answerData = {
+      fileName: req.file.originalname,
+      contentType: req.file.mimetype,
+      size: req.file.size,
+      uploadedAt: new Date(),
+      extractedText,
+      class: req.body.class,
+      type: "answer",
+    };
+    const answersCollection = mongoose.connection.collection("answers");
+    await answersCollection.insertOne(answerData);
+    res.status(200).json({ success: true, message: "Answer uploaded and processed successfully.", extractedText });
+  } catch (error) {
+    console.error("❌ Error uploading answer:", error);
+    res.status(500).json({ success: false, message: `Error uploading answer: ${error.message}` });
+  }
+});
+
+app.post("/api/chat", async (req, res) => {
+  try {
+    const { message } = req.body;
+    if (!message) {
+      return res.status(400).json({ reply: "No message provided." });
+    }
+    console.log("User:", message);
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const chat = await model.generateContent(message);
+    const responseText = chat?.response?.candidates?.[0]?.content?.parts?.[0]?.text || "No response received from AI.";
+    console.log("Bot:", responseText);
+    res.json({ reply: responseText });
+  } catch (error) {
+    console.error("❌ Chatbot Error:", error);
+    res.status(500).json({ reply: "I'm having trouble understanding your request. Please try again." });
+  }
+});
+
 app.listen(port, () => {
   console.log(`🚀 Server running at http://localhost:${port}`);
 });
