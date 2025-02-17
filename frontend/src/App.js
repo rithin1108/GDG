@@ -13,6 +13,7 @@ import TeacherInterface from './components/Teacher/TeacherInterface';
 import TeacherUpload from './components/Teacher/UploadAss';
 import Chatbot from './components/student/ChatBot';
 import StdSignUp from './components/logindetails/SignUpStudent';
+import StudentList from './dataFetching/studentList';
 function App() {
   return (
     // <div className="App">
@@ -35,6 +36,7 @@ function App() {
         <Route path="/upload" element={<TeacherUpload />} />
         <Route path="/chatbot" element={<Chatbot/>} />
         <Route path="/stdsignup" element={<StdSignUp/>} />
+        <Route path='/student-details-fetching' element={<StudentList />} />
       </Routes>
     </BrowserRouter>
   );

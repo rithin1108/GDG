@@ -1,7 +1,7 @@
 import React from "react";
 import { FaEnvelope, FaLock, FaBuilding } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import "./SignIn.css";
+// import "./SignIn.css";
 
 const SignIn = () => {
     const navigate = useNavigate();
